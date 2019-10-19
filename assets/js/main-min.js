@@ -1,1 +1,1 @@
-jQuery(document).ready(()=>{console.log("jalan banget")});
+"use strict";jQuery(document).ready(function(){console.log("jalan banget deh deh")});

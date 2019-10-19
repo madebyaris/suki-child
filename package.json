@@ -2,17 +2,36 @@
   "name": "suki-child",
   "version": "1.0.0",
   "description": "A 'modern' child theme for sukiWP",
-  "main": "index.js",
+  "main": "",
   "repository": "https://github.com/madebyaris/suki-child.git",
   "author": "madebyaris <arissetia.m@gmail.com>",
   "license": "MIT",
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
   "dependencies": {
     "browser-sync": "^2.26.7",
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.2.0",
     "gulp-concat": "^2.6.1",
+    "gulp-eslint": "^6.0.0",
     "gulp-minify": "^3.1.0",
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/polyfill": "^7.6.0",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/register": "^7.6.2",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.3",
+    "babel-loader": "^8.0.6",
+    "gulp-babel": "^8.0.0",
+    "gulp-if": "^3.0.0",
+    "gulp-sass-lint": "^1.4.0"
   }
 }

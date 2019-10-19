@@ -1,7 +1,5 @@
 (($) => {
-
-    $(document).ready( () =>{
-        console.log('jalan banget');
-    });
-
-})(jQuery);
+  $(document).ready(() => {
+    console.log('jalan banget deh deh')
+  })
+})(jQuery)

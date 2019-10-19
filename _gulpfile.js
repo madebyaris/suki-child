@@ -1,21 +1,28 @@
 //Definisikan lokasi
-var basePaths = {
+let basePaths = {
     node: './node_modules',
     css_location: './assets/css/',
     js_location: './assets/js/',
-};
+},
+    // Masukan URL website ini agar bisa menjalankan fungsi live
+    url_site = 'http://madebyaris.applocal';
+
 
 // Definisikan & muat package yang ingin digunakan.
-let gulp        = require('gulp'),
+const gulp        = require('gulp'),
     concat      = require('gulp-concat'),
     sass        = require('gulp-sass'),
     cleanCSS    = require('gulp-clean-css'),
     sourcemaps  = require('gulp-sourcemaps'),
     minify      = require('gulp-minify'),
-    browsersync = require('browser-sync');
+    browserSync = require('browser-sync').create(),
+    eslint      = require('gulp-eslint'),
+    gulpif      = require('gulp-if'),
+    babel       = require('babel-core'),
+    gulpBabel   = require('gulp-babel');
 
 // Awasi file dengan browser-sync.
-let browsersyncWatchFiles = [
+const browsersyncWatchFiles = [
     basePaths.css_location + '*.css',
     basePaths.js_location + '*.js'
 ];
@@ -31,15 +38,29 @@ function styles() {
                 console.log(details.name + ': ' + (details.stats.minifiedSize / 1000) + 'KB' );
             } ) )
             .pipe( gulp.dest( basePaths.css_location ) )
+            .pipe(browserSync.stream())
     );
 }
 
-
-// Perkecil File javascript.
-function scripts() {
+// Cek apakah javascript ada error atau tidak.
+function lint() {
     return (
         gulp
             .src( basePaths.js_location + '/src/*.js' )
+            .pipe(eslint())
+            .pipe(eslint.format())
+            .pipe(eslint.failAfterError())
+    );
+}
+// Perkecil File javascript.
+function scripts() {
+    lint();
+    return (
+        gulp
+            .src( basePaths.js_location + '/src/*.js' )
+            .pipe( babel(babel({
+                presets: ['@babel/env']
+            })) )
             .pipe( minify() )
             .pipe( gulp.dest( basePaths.js_location ) )
     );
@@ -51,8 +72,20 @@ function watch() {
     gulp.watch( basePaths.js_location + 'src/**/*.js', scripts);
 }
 
+// Fungsi untuk melihat perubahan secara langsung dengan me-refresh browser
+function live() {
+
+    browserSync.init({
+        proxy: url_site
+    });
+
+    gulp.watch( basePaths.css_location + 'sass/**/*.scss', styles );
+}
+
 // Buat perintah gulp dan jalankan fungsi yang telah di definisikan.
 exports.styles = styles;
 exports.scripts = scripts;
+exports.lint = lint;
 exports.watch = watch;
+exports.live = live;
 

@@ -1,3 +1,5 @@
 // Taruh file .scss difile ini untuk mengenerate scss menjadi css.
 
+@import 'common/variables';
+@import 'common/globals';
 @import 'layout/header';

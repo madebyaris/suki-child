@@ -1,0 +1,5 @@
+**/node_modules/**
+*.json
+*.pkg.js
+*.min.js
+gulpfile.js
